@@ -1,28 +1,19 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { AppModule } from 'src/app.module';
+import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { DataSource } from 'typeorm';
+import { SQLiteTestDataSource } from 'test/infrastructure/orm/sqlite-test-datasource';
+import { createTestApp } from 'test/utils/setup-2e2-app';
 
 describe('GET /categories/paginated (e2e)', () => {
   let app: INestApplication;
-  let dataSource: DataSource;
 
   beforeAll(async () => {
-    const moduleRef: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-
-    app = moduleRef.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-    await app.init();
-
-    dataSource = moduleRef.get(DataSource);
-    await dataSource.synchronize(true);
+    const result = await createTestApp();
+    app = result.app;
   });
 
   afterAll(async () => {
     await app.close();
+    await SQLiteTestDataSource.destroy();
   });
 
   it('should return paginated categories using default params', async () => {

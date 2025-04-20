@@ -1,19 +1,19 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
+import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { AppModule } from 'src/app.module';
+import { SQLiteTestDataSource } from 'test/infrastructure/orm/sqlite-test-datasource';
+import { createTestApp } from 'test/utils/setup-2e2-app';
 
 describe('POST /categories (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
+    const result = await createTestApp();
+    app = result.app;
+  });
 
-    app = moduleRef.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-    await app.init();
+  afterAll(async () => {
+    await app.close();
+    await SQLiteTestDataSource.destroy();
   });
 
   afterAll(async () => {
