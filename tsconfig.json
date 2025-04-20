@@ -19,6 +19,10 @@
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "src/*": ["src/*"],
+      "test/*": ["test/*"]
+    }
   }
 }

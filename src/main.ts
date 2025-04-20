@@ -8,14 +8,22 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Device Manager API')
-    .setDescription('The device manager API description')
+    .setDescription('The device manager API')
     .setVersion('1.0')
-    .addTag('devices')
+    .addTag('categories')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+  SwaggerModule.setup('docs', app, documentFactory);
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

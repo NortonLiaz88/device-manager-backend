@@ -10,7 +10,7 @@ export const AppDataSource: DataSourceOptions & SeederOptions = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: ['src/database/entities/*.ts'], // use string com caminho relativo
+  entities: ['src/infrastructure/database/entities/*.ts'], // use string com caminho relativo
   migrations: ['src/database/migrations/*.ts'],
   synchronize: true,
   logging: true,

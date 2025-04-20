@@ -5,19 +5,19 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Category } from './category';
+import { CategoryOrmEntity } from './category.orm-entity';
 
 @Entity('devices')
-export class Device {
+export class DeviceOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Category, (category) => category.devices, {
+  @ManyToOne(() => CategoryOrmEntity, (category) => category.devices, {
     nullable: false,
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'category_id' })
-  category: Category;
+  category: CategoryOrmEntity;
 
   @Column({ length: 16 })
   color: string;
