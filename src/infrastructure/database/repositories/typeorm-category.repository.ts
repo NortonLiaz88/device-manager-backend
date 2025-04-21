@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from 'src/core/domain/entities/category.entity';
+import { CategoryEntity } from 'src/core/domain/entities/category.entity';
 import { CategoryRepository } from 'src/core/domain/repositories/category.repository';
 import { Repository } from 'typeorm';
 import { CategoryOrmEntity } from '../entities/category.orm-entity';
@@ -13,23 +13,23 @@ export class TypeOrmCategoryRepository implements CategoryRepository {
     private readonly repo: Repository<CategoryOrmEntity>,
   ) {}
 
-  async create(category: Category): Promise<Category> {
+  async create(category: CategoryEntity): Promise<CategoryEntity> {
     const orm = CategoryMapper.toOrm(category);
     const saved = await this.repo.save(orm);
     return CategoryMapper.toDomain(saved);
   }
 
-  async findAll(): Promise<Category[]> {
+  async findAll(): Promise<CategoryEntity[]> {
     const all = await this.repo.find();
     return all.map(CategoryMapper.toDomain);
   }
 
-  async findById(id: number): Promise<Category | null> {
+  async findById(id: number): Promise<CategoryEntity | null> {
     const found = await this.repo.findOne({ where: { id } });
     return found ? CategoryMapper.toDomain(found) : null;
   }
 
-  async update(category: Category): Promise<Category> {
+  async update(category: CategoryEntity): Promise<CategoryEntity> {
     const orm = CategoryMapper.toOrm(category);
     const saved = await this.repo.save(orm);
     return CategoryMapper.toDomain(saved);
@@ -54,7 +54,7 @@ export class TypeOrmCategoryRepository implements CategoryRepository {
     orderBy: 'id' | 'name';
     orderDir: 'ASC' | 'DESC';
   }): Promise<{
-    data: Category[];
+    data: CategoryEntity[];
     total: number;
     page: number;
     limit: number;

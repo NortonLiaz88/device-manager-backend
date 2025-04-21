@@ -1,4 +1,4 @@
-import { Category } from '../../src/core/domain/entities/category.entity';
+import { CategoryEntity } from '../../src/core/domain/entities/category.entity';
 
 export const mockCategoryRepository = () => ({
   create: jest.fn(),
@@ -9,4 +9,4 @@ export const mockCategoryRepository = () => ({
   paginate: jest.fn(),
 });
 
-export const sampleCategory = new Category(1, 'Tech');
+export const sampleCategory = new CategoryEntity(1, 'Tech');

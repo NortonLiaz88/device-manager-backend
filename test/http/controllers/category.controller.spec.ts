@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CategoryController } from 'src/presentation/http/controllers/category.controller';
 
-import { Category } from 'src/core/domain/entities/category.entity';
-import { CreateCategoryUseCase } from 'src/core/usecases/create-category.use-case';
-import { DeleteCategoryUseCase } from 'src/core/usecases/delete-category.use-case';
-import { FindAllCategoriesUseCase } from 'src/core/usecases/find-all-categories.use-case';
-import { FindCategoryByIdUseCase } from 'src/core/usecases/find-category-by-id.use-case';
-import { UpdateCategoryUseCase } from 'src/core/usecases/update-category.use-case';
-import { PaginatedCategoriesUseCase } from 'src/core/usecases/paginated-categories.use-case';
+import { CategoryEntity } from 'src/core/domain/entities/category.entity';
+import { CreateCategoryUseCase } from 'src/core/usecases/category/create-category.use-case';
+import { DeleteCategoryUseCase } from 'src/core/usecases/category/delete-category.use-case';
+import { FindAllCategoriesUseCase } from 'src/core/usecases/category/find-all-categories.use-case';
+import { FindCategoryByIdUseCase } from 'src/core/usecases/category/find-category-by-id.use-case';
+import { UpdateCategoryUseCase } from 'src/core/usecases/category/update-category.use-case';
+import { PaginatedCategoriesUseCase } from 'src/core/usecases/category/paginated-categories.use-case';
 
 describe('CategoryController', () => {
   let controller: CategoryController;
@@ -15,16 +15,16 @@ describe('CategoryController', () => {
 
   const mockUseCases = {
     createCategory: {
-      execute: jest.fn().mockResolvedValue(new Category(1, 'Books')),
+      execute: jest.fn().mockResolvedValue(new CategoryEntity(1, 'Books')),
     },
     findAllCategories: {
-      execute: jest.fn().mockResolvedValue([new Category(1, 'Books')]),
+      execute: jest.fn().mockResolvedValue([new CategoryEntity(1, 'Books')]),
     },
     findCategoryById: {
-      execute: jest.fn().mockResolvedValue(new Category(1, 'Books')),
+      execute: jest.fn().mockResolvedValue(new CategoryEntity(1, 'Books')),
     },
     updateCategory: {
-      execute: jest.fn().mockResolvedValue(new Category(1, 'Updated')),
+      execute: jest.fn().mockResolvedValue(new CategoryEntity(1, 'Updated')),
     },
     deleteCategory: {
       execute: jest.fn().mockResolvedValue(undefined),
@@ -71,22 +71,22 @@ describe('CategoryController', () => {
 
   it('should create a category', async () => {
     const result = await controller.create({ name: 'Books' });
-    expect(result).toEqual(new Category(1, 'Books'));
+    expect(result).toEqual(new CategoryEntity(1, 'Books'));
   });
 
   it('should list all categories', async () => {
     const result = await controller.findAll();
-    expect(result).toEqual([new Category(1, 'Books')]);
+    expect(result).toEqual([new CategoryEntity(1, 'Books')]);
   });
 
   it('should return one category', async () => {
     const result = await controller.findOne(1);
-    expect(result).toEqual(new Category(1, 'Books'));
+    expect(result).toEqual(new CategoryEntity(1, 'Books'));
   });
 
   it('should update a category', async () => {
     const result = await controller.update(1, { name: 'Updated' });
-    expect(result).toEqual(new Category(1, 'Updated'));
+    expect(result).toEqual(new CategoryEntity(1, 'Updated'));
   });
 
   it('should delete a category', async () => {

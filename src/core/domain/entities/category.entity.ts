@@ -1,4 +1,4 @@
-export class Category {
+export class CategoryEntity {
   constructor(
     public readonly id: number | undefined,
     public name: string,

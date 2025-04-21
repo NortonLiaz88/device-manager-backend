@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CategoryRepository } from '../domain/repositories/category.repository';
-import { Category } from '../domain/entities/category.entity';
+import { CategoryRepository } from '../../domain/repositories/category.repository';
+import { CategoryEntity } from '../../domain/entities/category.entity';
 
 interface PaginatedQuery {
   page: number;
@@ -19,7 +19,7 @@ export class PaginatedCategoriesUseCase {
   ) {}
 
   async execute(query: PaginatedQuery): Promise<{
-    data: Category[];
+    data: CategoryEntity[];
     total: number;
     page: number;
     limit: number;

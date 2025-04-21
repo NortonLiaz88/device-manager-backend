@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -10,16 +11,16 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { CreateCategoryDto } from '../dtos/create-category.dto';
-import { UpdateCategoryDto } from '../dtos/update-category.dto';
-import { CreateCategoryUseCase } from 'src/core/usecases/create-category.use-case';
-import { DeleteCategoryUseCase } from 'src/core/usecases/delete-category.use-case';
-import { FindAllCategoriesUseCase } from 'src/core/usecases/find-all-categories.use-case';
-import { FindCategoryByIdUseCase } from 'src/core/usecases/find-category-by-id.use-case';
-import { UpdateCategoryUseCase } from 'src/core/usecases/update-category.use-case';
-import { CategoryQueryDto } from '../dtos/category-query.dto';
-import { PaginatedCategoriesUseCase } from 'src/core/usecases/paginated-categories.use-case';
-import { Category } from 'src/core/domain/entities/category.entity';
+import { CreateCategoryDto } from '../dtos/category/create-category.dto';
+import { UpdateCategoryDto } from '../dtos/category/update-category.dto';
+import { CreateCategoryUseCase } from 'src/core/usecases/category/create-category.use-case';
+import { DeleteCategoryUseCase } from 'src/core/usecases/category/delete-category.use-case';
+import { FindAllCategoriesUseCase } from 'src/core/usecases/category/find-all-categories.use-case';
+import { FindCategoryByIdUseCase } from 'src/core/usecases/category/find-category-by-id.use-case';
+import { UpdateCategoryUseCase } from 'src/core/usecases/category/update-category.use-case';
+import { CategoryQueryDto } from '../dtos/category/category-query.dto';
+import { PaginatedCategoriesUseCase } from 'src/core/usecases/category/paginated-categories.use-case';
+import { CategoryEntity } from 'src/core/domain/entities/category.entity';
 
 @ApiTags('categories')
 @Controller('categories')
@@ -45,12 +46,12 @@ export class CategoryController {
   @ApiResponse({
     status: 200,
     description: 'Lista completa de categorias',
-    type: [Category],
+    type: [CategoryEntity],
   })
-  async findAll(): Promise<Category[]> {
+  async findAll(): Promise<CategoryEntity[]> {
     const categories = await this.findAllCategories.execute();
     return categories.map(
-      (category) => new Category(category.id, category.name),
+      (category) => new CategoryEntity(category.id, category.name),
     );
   }
 
@@ -73,8 +74,13 @@ export class CategoryController {
   @ApiOperation({ summary: 'Buscar categoria por ID' })
   @ApiResponse({ status: 200, description: 'Categoria encontrada.' })
   @ApiResponse({ status: 400, description: 'ID inválido.' })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.findCategoryById.execute(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const category = await this.findCategoryById.execute(id);
+
+    if (!category) {
+      throw new NotFoundException('Category with id ${id} not found');
+    }
+    return new CategoryEntity(category.id, category.name);
   }
 
   @Put(':id')

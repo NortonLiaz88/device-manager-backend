@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { CategoryRepository } from '../domain/repositories/category.repository';
+import { CategoryRepository } from '../../domain/repositories/category.repository';
 
 @Injectable()
 export class DeleteCategoryUseCase {

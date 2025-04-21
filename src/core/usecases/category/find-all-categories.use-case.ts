@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { CategoryRepository } from '../domain/repositories/category.repository';
-import { Category } from '../domain/entities/category.entity';
+import { CategoryRepository } from '../../domain/repositories/category.repository';
+import { CategoryEntity } from '../../domain/entities/category.entity';
 
 @Injectable()
 export class FindAllCategoriesUseCase {
@@ -9,7 +9,7 @@ export class FindAllCategoriesUseCase {
     private readonly repository: CategoryRepository,
   ) {}
 
-  async execute(): Promise<Category[]> {
+  async execute(): Promise<CategoryEntity[]> {
     return this.repository.findAll();
   }
 }

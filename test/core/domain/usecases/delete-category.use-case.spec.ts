@@ -1,5 +1,5 @@
 import { CategoryRepository } from 'src/core/domain/repositories/category.repository';
-import { DeleteCategoryUseCase } from 'src/core/usecases/delete-category.use-case';
+import { DeleteCategoryUseCase } from 'src/core/usecases/category/delete-category.use-case';
 import { mockCategoryRepository } from 'test/mocks/category.repository.mock';
 
 describe('DeleteCategoryUseCase', () => {

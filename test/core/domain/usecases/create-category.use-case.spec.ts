@@ -1,5 +1,5 @@
 import { CategoryRepository } from 'src/core/domain/repositories/category.repository';
-import { CreateCategoryUseCase } from 'src/core/usecases/create-category.use-case';
+import { CreateCategoryUseCase } from 'src/core/usecases/category/create-category.use-case';
 import { mockCategoryRepository } from 'test/mocks/category.repository.mock';
 
 describe('CreateCategoryUseCase', () => {

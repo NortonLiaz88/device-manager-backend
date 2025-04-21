@@ -1,6 +1,6 @@
-import { PaginatedCategoriesUseCase } from 'src/core/usecases/paginated-categories.use-case';
+import { PaginatedCategoriesUseCase } from 'src/core/usecases/category/paginated-categories.use-case';
 import { CategoryRepository } from 'src/core/domain/repositories/category.repository';
-import { Category } from 'src/core/domain/entities/category.entity';
+import { CategoryEntity } from 'src/core/domain/entities/category.entity';
 
 describe('PaginatedCategoriesUseCase', () => {
   let useCase: PaginatedCategoriesUseCase;
@@ -16,7 +16,7 @@ describe('PaginatedCategoriesUseCase', () => {
 
   it('should return paginated categories with filters', async () => {
     const expected = {
-      data: [new Category(1, 'Tech')],
+      data: [new CategoryEntity(1, 'Tech')],
       total: 1,
       page: 1,
       limit: 10,

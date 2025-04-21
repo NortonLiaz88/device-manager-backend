@@ -1,5 +1,5 @@
 import { CategoryRepository } from 'src/core/domain/repositories/category.repository';
-import { UpdateCategoryUseCase } from 'src/core/usecases/update-category.use-case';
+import { UpdateCategoryUseCase } from 'src/core/usecases/category/update-category.use-case';
 import {
   mockCategoryRepository,
   sampleCategory,

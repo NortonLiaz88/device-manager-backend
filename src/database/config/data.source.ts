@@ -19,6 +19,5 @@ export const AppDataSource: DataSourceOptions & SeederOptions = {
   },
 };
 
-console.log('Valor: ', process.env.DROP_DATA_WHEN_INITIALIZED === 'true');
 const dataSource = new DataSource(AppDataSource);
 export default dataSource;

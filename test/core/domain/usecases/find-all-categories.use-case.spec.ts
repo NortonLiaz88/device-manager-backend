@@ -1,5 +1,5 @@
 import { CategoryRepository } from 'src/core/domain/repositories/category.repository';
-import { FindAllCategoriesUseCase } from 'src/core/usecases/find-all-categories.use-case';
+import { FindAllCategoriesUseCase } from 'src/core/usecases/category/find-all-categories.use-case';
 import {
   mockCategoryRepository,
   sampleCategory,
