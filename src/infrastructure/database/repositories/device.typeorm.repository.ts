@@ -105,6 +105,7 @@ export class DeviceTypeOrmRepository implements DeviceRepository {
       order: {
         [orderBy]: orderDir,
       },
+      relations: ['category'],
     });
 
     const data = entities.map(

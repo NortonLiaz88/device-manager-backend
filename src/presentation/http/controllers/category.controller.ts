@@ -1,14 +1,18 @@
 import {
+  BadRequestException,
   Body,
+  ConflictException,
   Controller,
   Delete,
   Get,
+  InternalServerErrorException,
   NotFoundException,
   Param,
   ParseIntPipe,
   Post,
   Put,
   Query,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateCategoryDto } from '../dtos/category/create-category.dto';
@@ -75,12 +79,22 @@ export class CategoryController {
   @ApiResponse({ status: 200, description: 'Categoria encontrada.' })
   @ApiResponse({ status: 400, description: 'ID inválido.' })
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    const category = await this.findCategoryById.execute(id);
+    try {
+      const category = await this.findCategoryById.execute(id);
 
-    if (!category) {
-      throw new NotFoundException('Category with id ${id} not found');
+      if (!category) {
+        throw new NotFoundException('Category with id ${id} not found');
+      }
+      return new CategoryEntity(category.id, category.name);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException('Category with id ${id} not found');
+      }
+      if (error instanceof ConflictException) {
+        throw new ConflictException('Category already exists');
+      }
+      throw new InternalServerErrorException('Internal server error');
     }
-    return new CategoryEntity(category.id, category.name);
   }
 
   @Put(':id')
@@ -94,7 +108,17 @@ export class CategoryController {
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateCategoryDto,
   ) {
-    return this.updateCategory.execute(id, dto.name);
+    try {
+      return this.updateCategory.execute(id, dto.name);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException('Category with id ${id} not found');
+      }
+      if (error instanceof ConflictException) {
+        throw new ConflictException('Category already exists');
+      }
+      throw new InternalServerErrorException('Internal server error');
+    }
   }
 
   @Delete(':id')
@@ -102,6 +126,16 @@ export class CategoryController {
   @ApiResponse({ status: 200, description: 'Categoria removida.' })
   @ApiResponse({ status: 400, description: 'ID inválido.' })
   delete(@Param('id', ParseIntPipe) id: number) {
-    return this.deleteCategory.execute(id);
+    try {
+      return this.deleteCategory.execute(id);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException('Category with id ${id} not found');
+      }
+      if (error instanceof ConflictException) {
+        throw new ConflictException('Category already exists');
+      }
+      throw new InternalServerErrorException('Internal server error');
+    }
   }
 }

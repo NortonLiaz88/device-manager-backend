@@ -29,6 +29,11 @@ export class TypeOrmCategoryRepository implements CategoryRepository {
     return found ? CategoryMapper.toDomain(found) : null;
   }
 
+  async findByName(name: string): Promise<CategoryEntity | null> {
+    const found = await this.repo.findOne({ where: { name } });
+    return found ? CategoryMapper.toDomain(found) : null;
+  }
+
   async update(category: CategoryEntity): Promise<CategoryEntity> {
     const orm = CategoryMapper.toOrm(category);
     const saved = await this.repo.save(orm);

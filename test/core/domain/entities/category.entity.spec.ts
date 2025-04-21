@@ -12,6 +12,8 @@ describe('Category Entity', () => {
 
   it('should throw if name is too long', () => {
     const longName = 'A'.repeat(129);
-    expect(() => new CategoryEntity(1, longName)).toThrow('Invalid category name');
+    expect(() => new CategoryEntity(1, longName)).toThrow(
+      'Invalid category name',
+    );
   });
 });

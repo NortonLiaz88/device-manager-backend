@@ -4,6 +4,7 @@ export interface CategoryRepository {
   create(category: CategoryEntity): Promise<CategoryEntity>;
   findAll(): Promise<CategoryEntity[]>;
   findById(id: number): Promise<CategoryEntity | null>;
+  findByName(name: string): Promise<CategoryEntity | null>;
   delete(id: number): Promise<void>;
   update(category: CategoryEntity): Promise<CategoryEntity>;
   paginate(query: {

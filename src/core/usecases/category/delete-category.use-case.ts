@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { CategoryRepository } from '../../domain/repositories/category.repository';
 
 @Injectable()
@@ -9,6 +9,10 @@ export class DeleteCategoryUseCase {
   ) {}
 
   async execute(id: number): Promise<void> {
+    const existing = await this.repository.findById(id);
+    if (!existing) {
+      throw new NotFoundException(`Category with id ${id} not found`);
+    }
     return this.repository.delete(id);
   }
 }
