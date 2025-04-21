@@ -1,5 +1,5 @@
 import { CategoryEntity } from 'src/core/domain/entities/category.entity';
-import { CategoryOrmEntity } from 'src/infrastructure/database/entities/category.orm-entity';
+import { CategoryOrmEntity } from 'src/infrastructure/database/orm/entities/category.orm-entity';
 import { CategoryMapper } from 'src/infrastructure/database/mappers/category.mapper';
 
 describe('CategoryMapper', () => {

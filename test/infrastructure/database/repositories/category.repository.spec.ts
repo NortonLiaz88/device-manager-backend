@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoryOrmEntity } from 'src/infrastructure/database/entities/category.orm-entity';
-import { DeviceOrmEntity } from 'src/infrastructure/database/entities/device.orm-entity';
+import { CategoryOrmEntity } from 'src/infrastructure/database/orm/entities/category.orm-entity';
+import { DeviceOrmEntity } from 'src/infrastructure/database/orm/entities/device.orm-entity';
 import { TypeOrmCategoryRepository } from 'src/infrastructure/database/repositories/typeorm-category.repository';
 import { CategoryEntity } from 'src/core/domain/entities/category.entity';
 import { CategoryRepository } from 'src/core/domain/repositories/category.repository';

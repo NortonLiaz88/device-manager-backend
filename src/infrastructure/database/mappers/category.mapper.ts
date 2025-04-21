@@ -1,5 +1,5 @@
 import { CategoryEntity } from 'src/core/domain/entities/category.entity';
-import { CategoryOrmEntity } from '../entities/category.orm-entity';
+import { CategoryOrmEntity } from '../orm/entities/category.orm-entity';
 
 export class CategoryMapper {
   static toDomain(entity: CategoryOrmEntity): CategoryEntity {

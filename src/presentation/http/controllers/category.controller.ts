@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   ConflictException,
   Controller,
@@ -12,7 +11,6 @@ import {
   Post,
   Put,
   Query,
-  UnprocessableEntityException,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateCategoryDto } from '../dtos/category/create-category.dto';

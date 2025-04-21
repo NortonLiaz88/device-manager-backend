@@ -1,12 +1,21 @@
-// src/domain/entity/device.entity.ts
 export class DeviceEntity {
+  public get categoryId(): number {
+    return this._categoryId;
+  }
+  public set categoryId(value: number) {
+    this._categoryId = value;
+  }
   constructor(
     public readonly id: number,
-    public categoryId: number,
+    private _categoryId: number,
     public color: string,
     public partNumber: number,
   ) {
     if (!color.match(/^[A-Za-z]{1,16}$/)) throw new Error('Invalid color');
-    if (partNumber <= 0) throw new Error('Part number must be positive');
+    if (partNumber <= 0 || partNumber > 2147483647) {
+      throw new Error(
+        'Part number must be a positive integer up to 2,147,483,647',
+      );
+    }
   }
 }

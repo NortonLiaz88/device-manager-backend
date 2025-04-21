@@ -1,4 +1,4 @@
-import { DeviceEntity } from 'src/core/domain/entities/device.entity';
+import { DeviceWithCategoryEntity } from 'src/core/domain/entities/device-with-category';
 import { DeviceRepository } from 'src/core/domain/repositories/device.repository';
 
 interface GetPaginatedDevicesInput {
@@ -15,7 +15,7 @@ export class GetPaginatedDevicesUseCase {
   constructor(private readonly repo: DeviceRepository) {}
 
   async execute(input: GetPaginatedDevicesInput): Promise<{
-    data: DeviceEntity[];
+    data: DeviceWithCategoryEntity[];
     total: number;
     page: number;
     limit: number;

@@ -9,7 +9,7 @@ import { GetAllDevicesUseCase } from 'src/core/usecases/device/get-all-devices.u
 import { GetDeviceByIdUseCase } from 'src/core/usecases/device/get-device-by-id.usecase';
 import { GetPaginatedDevicesUseCase } from 'src/core/usecases/device/get-paginated-devices.usecase';
 import { UpdateDeviceUseCase } from 'src/core/usecases/device/update-device.usecase';
-import { DeviceOrmEntity } from 'src/infrastructure/database/entities/device.orm-entity';
+import { DeviceOrmEntity } from 'src/infrastructure/database/orm/entities/device.orm-entity';
 import { DeviceTypeOrmRepository } from 'src/infrastructure/database/repositories/device.typeorm.repository';
 import { DeviceController } from 'src/presentation/http/controllers/device.controller';
 import { CategoryModule } from '../category/category.module';

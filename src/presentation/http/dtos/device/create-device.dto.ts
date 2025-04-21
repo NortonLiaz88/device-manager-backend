@@ -4,6 +4,7 @@ import {
   IsPositive,
   IsString,
   Matches,
+  Max,
   MaxLength,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
@@ -22,5 +23,6 @@ export class CreateDeviceDto {
   @ApiProperty({ example: 12345 })
   @IsInt()
   @IsPositive()
+  @Max(2147483647)
   partNumber: number;
 }

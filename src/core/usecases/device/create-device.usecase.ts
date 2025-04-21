@@ -16,8 +16,19 @@ export class CreateDeviceUseCase {
 
   async execute(input: CreateDeviceInput): Promise<DeviceEntity> {
     const category = await this.categoryRepo.findById(input.categoryId);
+
     if (!category) {
       throw new Error(`Category with id ${input.categoryId} does not exist`);
+    }
+
+    const existingDevice = await this.deviceRepo.findByPartNumber(
+      input.partNumber,
+    );
+
+    if (existingDevice) {
+      throw new Error(
+        `Device with part number ${input.partNumber} already exists`,
+      );
     }
 
     const device = new DeviceEntity(

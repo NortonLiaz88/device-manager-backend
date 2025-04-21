@@ -2,9 +2,10 @@ import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeviceRepository } from 'src/core/domain/repositories/device.repository';
 import { DeviceEntity } from 'src/core/domain/entities/device.entity';
-import { DeviceOrmEntity } from '../entities/device.orm-entity';
+import { DeviceOrmEntity } from '../orm/entities/device.orm-entity';
 import { CategoryEntity } from 'src/core/domain/entities/category.entity';
 import { Injectable } from '@nestjs/common';
+import { DeviceWithCategoryEntity } from 'src/core/domain/entities/device-with-category';
 
 @Injectable()
 export class DeviceTypeOrmRepository implements DeviceRepository {
@@ -73,6 +74,20 @@ export class DeviceTypeOrmRepository implements DeviceRepository {
     );
   }
 
+  async findByPartNumber(partNumber: number): Promise<DeviceEntity | null> {
+    const found = await this.ormRepo.findOne({
+      where: { partNumber },
+      relations: ['category'],
+    });
+    if (!found) return null;
+    return new DeviceEntity(
+      found.id,
+      found.category.id,
+      found.color,
+      found.partNumber,
+    );
+  }
+
   async delete(id: number): Promise<void> {
     await this.ormRepo.delete(id);
   }
@@ -86,7 +101,7 @@ export class DeviceTypeOrmRepository implements DeviceRepository {
     orderBy: 'id' | 'color' | 'partNumber';
     orderDir: 'ASC' | 'DESC';
   }): Promise<{
-    data: DeviceEntity[];
+    data: DeviceWithCategoryEntity[];
     total: number;
     page: number;
     limit: number;
@@ -109,7 +124,8 @@ export class DeviceTypeOrmRepository implements DeviceRepository {
     });
 
     const data = entities.map(
-      (e) => new DeviceEntity(e.id, e.category.id, e.color, e.partNumber),
+      (e) =>
+        new DeviceWithCategoryEntity(e.id, e.category, e.color, e.partNumber),
     );
 
     return { data, total, page, limit };

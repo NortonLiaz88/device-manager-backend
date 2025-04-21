@@ -25,6 +25,6 @@ describe('DeviceEntity', () => {
   it('should throw an error if partNumber is not positive', () => {
     expect(() => {
       new DeviceEntity(1, 1, 'Green', 0);
-    }).toThrow('Part number must be positive');
+    }).toThrow('Part number must be a positive integer up to 2,147,483,647');
   });
 });

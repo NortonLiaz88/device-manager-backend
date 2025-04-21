@@ -11,7 +11,12 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 import { CreateDeviceUseCase } from 'src/core/usecases/device/create-device.usecase';
 import { DeleteDeviceUseCase } from 'src/core/usecases/device/delete-device.usecase';
 import { GetAllDevicesUseCase } from 'src/core/usecases/device/get-all-devices.usecase';
@@ -21,6 +26,7 @@ import { CreateDeviceDto } from '../dtos/device/create-device.dto';
 import { PaginateDeviceQueryDto } from '../dtos/device/paginate-device-query.dto';
 import { UpdateDeviceDto } from '../dtos/device/update-device.dto';
 import { UpdateDeviceUseCase } from 'src/core/usecases/device/update-device.usecase';
+import { PaginatedDevicesResponseDto } from '../dtos/device/device-response.dto';
 
 @ApiTags('Devices')
 @Controller('devices')
@@ -42,6 +48,7 @@ export class DeviceController {
   }
 
   @Get('/paginated')
+  @ApiOkResponse({ type: PaginatedDevicesResponseDto })
   @ApiOperation({ summary: 'Get paginated list of devices with filters' })
   async paginate(@Query() query: PaginateDeviceQueryDto) {
     return await this.getPaginatedDevices.execute(query);

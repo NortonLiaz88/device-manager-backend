@@ -7,6 +7,7 @@ export const mockDeviceRepository = () => ({
   update: jest.fn(),
   delete: jest.fn(),
   paginate: jest.fn(),
+  findByPartNumber: jest.fn(),
 });
 
 export const sampleCategory = new CategoryEntity(1, 'Tech');

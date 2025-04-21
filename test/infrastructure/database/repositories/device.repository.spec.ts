@@ -3,8 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryEntity } from 'src/core/domain/entities/category.entity';
 
 import { DeviceEntity } from 'src/core/domain/entities/device.entity';
-import { CategoryOrmEntity } from 'src/infrastructure/database/entities/category.orm-entity';
-import { DeviceOrmEntity } from 'src/infrastructure/database/entities/device.orm-entity';
+import { CategoryOrmEntity } from 'src/infrastructure/database/orm/entities/category.orm-entity';
+import { DeviceOrmEntity } from 'src/infrastructure/database/orm/entities/device.orm-entity';
 import { DeviceTypeOrmRepository } from 'src/infrastructure/database/repositories/device.typeorm.repository';
 import { TypeOrmCategoryRepository } from 'src/infrastructure/database/repositories/typeorm-category.repository';
 

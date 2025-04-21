@@ -1,6 +1,7 @@
-import { DeviceEntity } from 'src/core/domain/entities/device.entity';
+import { DeviceWithCategoryEntity } from 'src/core/domain/entities/device-with-category';
 import { DeviceRepository } from 'src/core/domain/repositories/device.repository';
 import { GetPaginatedDevicesUseCase } from 'src/core/usecases/device/get-paginated-devices.usecase';
+import { sampleCategory } from 'test/mocks/category.repository.mock';
 import { mockDeviceRepository } from 'test/mocks/device.repository.mock';
 
 describe('GetPaginatedDevicesUseCase', () => {
@@ -14,9 +15,10 @@ describe('GetPaginatedDevicesUseCase', () => {
   });
 
   it('should return paginated devices', async () => {
+    const category = sampleCategory;
     const mockDevices = [
-      new DeviceEntity(1, 1, 'Red', 100),
-      new DeviceEntity(2, 2, 'Blue', 200),
+      new DeviceWithCategoryEntity(1, category, 'Red', 100),
+      new DeviceWithCategoryEntity(2, category, 'Blue', 200),
     ];
 
     const paginationParams = {

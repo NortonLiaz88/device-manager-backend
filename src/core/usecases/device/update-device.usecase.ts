@@ -17,8 +17,20 @@ export class UpdateDeviceUseCase {
 
   async execute(input: UpdateDeviceInput): Promise<DeviceEntity> {
     const existingDevice = await this.deviceRepo.findById(input.id);
+
     if (!existingDevice) {
       throw new Error(`Device with id ${input.id} not found`);
+    }
+    const existingDeviceWithSamePartNumber =
+      await this.deviceRepo.findByPartNumber(input.partNumber);
+
+    if (
+      existingDeviceWithSamePartNumber &&
+      existingDeviceWithSamePartNumber.id !== input.id
+    ) {
+      throw new Error(
+        `Device with part number ${input.partNumber} already exists`,
+      );
     }
 
     const category = await this.categoryRepo.findById(input.categoryId);
