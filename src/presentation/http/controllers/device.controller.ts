@@ -1,9 +1,12 @@
 // src/adapter/controller/device.controller.ts
 import {
+  BadRequestException,
   Body,
+  ConflictException,
   Controller,
   Delete,
   Get,
+  InternalServerErrorException,
   NotFoundException,
   Param,
   ParseIntPipe,
@@ -44,7 +47,20 @@ export class DeviceController {
   @ApiOperation({ summary: 'Create a new device' })
   @ApiResponse({ status: 201, description: 'Device created successfully' })
   async create(@Body() dto: CreateDeviceDto) {
-    return await this.createDevice.execute(dto);
+    try {
+      return await this.createDevice.execute(dto);
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw new BadRequestException(error.message);
+      }
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException('Category with id ${id} not found');
+      }
+      if (error instanceof ConflictException) {
+        throw new ConflictException('Category already exists');
+      }
+      throw new InternalServerErrorException('Internal server error');
+    }
   }
 
   @Get('/paginated')

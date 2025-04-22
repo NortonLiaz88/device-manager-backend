@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { DeviceEntity } from 'src/core/domain/entities/device.entity';
 import { CategoryRepository } from 'src/core/domain/repositories/category.repository';
 import { DeviceRepository } from 'src/core/domain/repositories/device.repository';
@@ -18,7 +19,9 @@ export class CreateDeviceUseCase {
     const category = await this.categoryRepo.findById(input.categoryId);
 
     if (!category) {
-      throw new Error(`Category with id ${input.categoryId} does not exist`);
+      throw new BadRequestException(
+        `Category with id ${input.categoryId} does not exist`,
+      );
     }
 
     const existingDevice = await this.deviceRepo.findByPartNumber(
@@ -26,7 +29,7 @@ export class CreateDeviceUseCase {
     );
 
     if (existingDevice) {
-      throw new Error(
+      throw new BadRequestException(
         `Device with part number ${input.partNumber} already exists`,
       );
     }
