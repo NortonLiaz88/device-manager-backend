@@ -13,12 +13,13 @@ export class DeviceSeeder implements Seeder {
 
     const devices = Array.from({ length: 300 }).map(() => {
       const category = faker.helpers.arrayElement(categories);
+      const color = faker.color.human().replace(/\s/g, '').slice(0, 16); // Remove espaços e limita tamanho
 
       return deviceRepo.create({
         category: {
           id: category.id,
         },
-        color: faker.color.human().slice(0, 16),
+        color: color,
         partNumber: faker.number.int({ min: 1, max: 99999 }),
       });
     });

@@ -11,7 +11,8 @@ export class DeviceEntity {
     public color: string,
     public partNumber: number,
   ) {
-    if (!color.match(/^[A-Za-z]{1,16}$/)) throw new Error('Invalid color');
+    if (!color.match(/^[A-Za-z]{1,16}$/))
+      throw new Error(`${color} is not valid`);
     if (partNumber <= 0 || partNumber > 2147483647) {
       throw new Error(
         'Part number must be a positive integer up to 2,147,483,647',
