@@ -11,15 +11,18 @@ describe('DeviceEntity', () => {
   });
 
   it('should throw an error if color has invalid characters', () => {
+    const color = 'Blue123';
     expect(() => {
-      new DeviceEntity(1, 1, 'Blue123', 123);
-    }).toThrow('Invalid color');
+      new DeviceEntity(1, 1, color, 123);
+    }).toThrow(`${color} is not valid`);
   });
 
   it('should throw an error if color exceeds max length', () => {
+    const color = 'A'.repeat(17);
+
     expect(() => {
-      new DeviceEntity(1, 1, 'A'.repeat(17), 123);
-    }).toThrow('Invalid color');
+      new DeviceEntity(1, 1, color, 123);
+    }).toThrow(`${color} is not valid`);
   });
 
   it('should throw an error if partNumber is not positive', () => {
